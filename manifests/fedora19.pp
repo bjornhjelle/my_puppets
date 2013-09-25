@@ -26,12 +26,12 @@ package { ["flash-plugin", "nspluginwrapper", "alsa-plugins-pulseaudio", "libcur
 class dropbox {
 file { "/etc/yum.repos.d/dropbox.repo":
   ensure => file,
-  source => "/home/bjorn/nas/bjorn/puppet/files/dropbox.repo",
+  source => "/home/bjorn/my_puppets/files/dropbox.repo",
 }
 
 file { "/etc/sysctl.conf":
   ensure => file,
-  source => "/home/bjorn/nas/bjorn/puppet/files/sysctl.conf",
+  source => "/home/bjorn/my_puppets/files/sysctl.conf",
 }
 
 package { "nautilus-dropbox":
@@ -48,7 +48,7 @@ exec { "sysctl-p":
 class google-chrome {
 file { "/etc/yum.repos.d/google-chrome.repo":
   ensure => file,
-  source => "/home/bjorn/nas/bjorn/puppet/files/google-chrome.repo",
+  source => "/home/bjorn/my_puppets/files/google-chrome.repo",
 }
 
 package { "google-chrome-stable":
