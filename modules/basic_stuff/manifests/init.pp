@@ -13,25 +13,46 @@ class basic_stuff {
     group => root,
     source => "puppet:///modules/basic_stuff/bash_aliases",
   }
+
+# Funker ikke å installere dropbox fra repository. Så installerer slik: 
+# $ cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+# $ ~/.dropbox-dist/dropboxd
+
+  # Add Dropbox's apt-key.
+  # Assumes definition elsewhere of an Exec["apt-get update"] - or
+  # uncomment below.
+#  exec { "add dropbox key":
+#    command => "apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E",
+#    refreshonly => true,
+#    notify => Exec["update"],
+#  }   
+  
     
   package { ["gedit-plugins", "git-gui", "flashplugin-installer", "vlc"]:
-    ensure => present
-  }
-  
-  exec { "get dropbox":
-    command => 'wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_1.6.0_amd64.deb',
-    cwd => '/home/bjorn/Downloads',
-    user => 'bjorn',
-    group => 'bjorn',
-    creates => '/home/bjorn/Downloads/dropbox_1.6.0_amd64.deb'
+    ensure => present,
+#    require => Exec["dropbox_update"]
   }
 
-  exec { "install dropbox":
-    command => 'dpkg -i dropbox*.deb',
-    cwd => '/home/bjorn/Downloads',
-    user => 'bjorn',
-    group => 'bjorn',
-    creates => '/home/bjorn/Downloads/dropbox_1.6.0_amd64.deb'
+  file { "/etc/sysctl.d/dropbox.conf":
+    ensure => file,
+    owner => root,
+    group => root,
+    source => "puppet:///modules/basic_stuff/dropbox.conf",
   }
+    
+
+#  exec { 'dropbox_update':
+#    command => 'apt-get update',
+#    require => Exec['add spotify key']
+#  }
+       
+  
+#  file { "/etc/apt/sources.list.d/dropbox.list":
+#    owner => "root",
+#    group => "root",
+#    mode => 444,
+#    source => "puppet:///modules/basic_stuff/dropbox.list",
+#    require => Exec["add dropbox key"]
+#  }  
   
 }
