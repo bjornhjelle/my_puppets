@@ -1,0 +1,10 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific aliases and functions
+alias h="history"
+alias puppet_f19="sudo puppet apply --modulepath my_puppets/modules my_puppets/manifests/fedora19.pp"
