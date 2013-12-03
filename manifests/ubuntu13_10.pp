@@ -37,6 +37,7 @@ node default {
   include basic_stuff
   include spotify 
   include nas_mounts
+  include skype
   
 
 }
