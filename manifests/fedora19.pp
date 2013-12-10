@@ -106,7 +106,7 @@ node default {
     mode => 644 
   }
 
-  package { ["git", "git-gui", "tcplay", "keepassx", "gnupg", "wget", "vlc", "gedit-plugins"]:
+  package { ["git", "git-gui", "tcplay", "keepassx", "gnupg", "wget", "vlc", "gedit-plugins", "easytag"]:
     ensure => 'present',
     require => File["/home/bjorn/.bashrc"]
   }
