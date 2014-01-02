@@ -30,5 +30,7 @@ class mpd {
     require => Package['mpd']
   } 
 
+  alert("husk å åpne for TCP på port 6600 i brannmuren...")
   
+
 }
