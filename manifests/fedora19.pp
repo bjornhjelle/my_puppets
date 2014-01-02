@@ -116,6 +116,7 @@ node default {
   include dropbox
   include google-chrome
   include virtualbox
+  include mpd
 
   # en annen spotify rpm:
   #https://docs.google.com/file/d/0B_UAut69TSAicTFDU01QOVlXc2s/edit?usp=sharing
@@ -132,8 +133,6 @@ node default {
     path => "/usr/bin",
     unless => "rpm -qa | grep vagrant",
     require => Package["VirtualBox"]
-
-
   }
 }
 
