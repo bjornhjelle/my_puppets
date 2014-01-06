@@ -1,10 +1,10 @@
-class basic_stuff {
+class basic_stuff($hostname) {
 
   file { "/etc/hosts":
     ensure => file,
     owner => root,
     group => root,
-    source => "puppet:///modules/basic_stuff/hosts",
+    source => "puppet:///modules/basic_stuff/hosts_$hostname",
   }
   
   file { "/home/bjorn/.bash_aliases":
@@ -14,31 +14,34 @@ class basic_stuff {
     source => "puppet:///modules/basic_stuff/bash_aliases",
   }
 
-# Funker ikke å installere dropbox fra repository. Så installerer slik: 
-# $ cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
-# $ ~/.dropbox-dist/dropboxd
-
-  # Add Dropbox's apt-key.
-  # Assumes definition elsewhere of an Exec["apt-get update"] - or
-  # uncomment below.
-#  exec { "add dropbox key":
-#    command => "apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E",
-#    refreshonly => true,
-#    notify => Exec["update"],
-#  }   
-  
-    
-  package { ["gedit-plugins", "git-gui", "flashplugin-installer", "vlc"]:
+  package { ["git", "git-gui", "tcplay", "keepassx", "gnupg", "gedit-plugins", "vlc", "liveusb-creator", "wget", "easytag"]:
     ensure => present,
-#    require => Exec["dropbox_update"]
   }
 
-  file { "/etc/sysctl.d/dropbox.conf":
+
+# Dropbox
+
+  file { "/etc/yum.repos.d/dropbox.repo":
     ensure => file,
-    owner => root,
-    group => root,
-    source => "puppet:///modules/basic_stuff/dropbox.conf",
+    source => "puppet:///modules/basic_stuff/dropbox.repo",
   }
+
+  file { "/etc/sysctl.conf":
+    ensure => file,
+    source => "puppet:///modules/basic_stuff/sysctl.conf",
+  }
+
+  package { "nautilus-dropbox":
+    ensure => 'present',
+    require => File["/etc/yum.repos.d/dropbox.repo"]
+  }
+  exec { "sysctl-p":
+    command => "sysctl -p",
+    path => "/usr/sbin",
+    require => File["/etc/sysctl.conf"]
+  }
+  
+
     
 
 #  exec { 'dropbox_update':

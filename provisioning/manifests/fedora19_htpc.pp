@@ -46,12 +46,17 @@ node default {
   Exec {
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   }
+  
 
+  
   package { ["git", "git-gui", "tcplay", "keepassx", "gnupg", "wget", "vlc", "gedit-plugins", "easytag"]:
     ensure => 'present'
   }
 
 
+  class { "basic_stuff":
+    hostname => "htpc"
+  }
   include flash
   include dropbox
   include google-chrome

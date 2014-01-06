@@ -1,1 +1,3 @@
 alias h='history'
+alias puppet_f19="sudo puppet apply --modulepath my_puppets/provisioning/modules my_puppets/provisioning/manifests/fedora19.pp"
+
