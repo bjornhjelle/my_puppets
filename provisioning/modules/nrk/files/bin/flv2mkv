@@ -1,0 +1,24 @@
+#!/bin/bash
+source="${1}"
+target="${1%.*}.mkv"
+srt="${1%.*}.srt"
+
+echo "converting"
+
+ffmpeg -i "${source}" -acodec copy -vcodec copy "${target}" > /dev/null 2>&1
+if [ "$?" == 0 ]; then
+	rm "${source}"
+	echo "done"
+fi
+
+if [ -f "${srt}" ]; then
+	echo "subtitles found, adding"
+	cat "${srt}" | iconv -t UTF-8 -f ISO-8859-1 > "${srt}.tmp"
+	mv "${target}" "${target}.tmp"
+	mkvmerge -o "${target}" "${target}.tmp" --language "0:nor" --track-name "0:Norwegian" -s 0 -D -A "${srt}.tmp" > /dev/null 2>&1
+	if [ "$?" == 0 ]; then
+		rm "${srt}" "${srt}.tmp"
+	fi
+	rm "${target}.tmp"
+	echo "done"
+fi

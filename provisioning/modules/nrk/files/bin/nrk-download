@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# NRK subtitles download script
+# Originally written by Ingvar 
+# Updated version by Morpfh
+#
+# SubRip: http://forum.doom9.org/showthread.php?p=470941#post470941
+#
+
+MKVCONVERT=1
+
+if [ "$1" = "" ]; then
+  echo "This script will download video and subtitles from a tv.nrk.no url"
+  echo "Usage: $0 url"
+  echo "Example: $0 http://tv.nrk.no/serie/store-leker/koid24008909/sesong-1/episode-5"
+  exit 0
+fi
+
+url="$1"
+hdcore="2.7.6"
+
+title=$(
+  curl -s "$url" | grep '<title>' | sed 's/.*<title>\(.*\)<\/title>.*/\1/;'
+)
+
+vfile="$title.flv"
+subf="$title.srt"
+mkvfile="$title.mkv"
+
+if [ -f "$subf" ]; then
+  echo "Error: File \"$subf\" already exists."
+  exit 2
+fi
+
+if [ -f "$vfile" ] || [ -f "$mkvfile" ]; then
+  echo "Error: File \"$vfile\" or converted mkv file already exists."
+  exit 2
+fi
+
+echo "Downloading $title"
+
+manifest=$(
+  curl -s "$url" | awk -F\" '/data-media="/ {print $2}'
+)
+manifest="$manifest?hdcore=$hdcore"
+
+subtitles=$(
+  curl -s "$url" | awk -F\" '/data-subtitlesurl/ { print $2 }'
+) 
+
+echo "Downloading and converting subtitles..."
+if perl ~/bin/nrk-subtitles "http://tv.nrk.no$subtitles" > "$subf"; then
+	echo Finished 
+else
+	echo Failed
+fi
+
+echo "Downloading and converting video..."
+php ~/bin/AdobeHDS.php --quality high --delete --outfile "$vfile" --manifest "$manifest";
+
+# Clean up
+rm -f Cookies.txt
+echo "Video was stored in \"$vfile\""
+if [ $MKVCONVERT == 1 ]; then
+  flv2mkv "$vfile"
+fi
+

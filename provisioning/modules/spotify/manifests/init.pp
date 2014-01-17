@@ -1,9 +1,17 @@
 class spotify {
 
+# http://blog.ulyaoth.net/2012/03/01/spotify-for-linux-preview-installation-in-fedora/
+
+
+  file { "/etc/yum.repos.d/ulyaoth.repo":
+    ensure => file,
+    source => "puppet:///modules/spotify/ulyaoth.repo",
+  }
+
   exec { "spotify":
-    command => "yum -y install http://trash.ulyaoth.asia/trash/rpm/spotify-client-0.9.1.55.ulyaoth-1.fc19.x86_64.rpm",
+    command => "yum -y install spotify",
     path => "/usr/bin",
-    unless => "rpm -qa | grep spotify-client"
+    unless => "rpm -qa | grep spotify"
 
   }
 

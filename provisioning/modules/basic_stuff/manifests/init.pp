@@ -1,49 +1,58 @@
-class basic_stuff($hostname) {
+class basic_stuff {
 
-  file { "/etc/hosts":
+#  file { "/home/bjorn/.bash_aliases":
+#    ensure => file,
+#    owner => root,
+#    group => root,
+#    source => "puppet:///modules/basic_stuff/bash_aliases",
+#  }
+
+  file { "/etc/profile.d/alias_h.sh":
     ensure => file,
     owner => root,
     group => root,
-    source => "puppet:///modules/basic_stuff/hosts_$hostname",
-  }
-  
-  file { "/home/bjorn/.bash_aliases":
-    ensure => file,
-    owner => root,
-    group => root,
-    source => "puppet:///modules/basic_stuff/bash_aliases",
+    source => "puppet:///modules/basic_stuff/alias_h.sh",
   }
 
-  package { ["git", "git-gui", "tcplay", "keepassx", "gnupg", "gedit-plugins", "vlc", "liveusb-creator", "wget", "easytag"]:
+  package { ["openssh-server", "openssh"]:
+    ensure => present
+  }
+
+  service {"sshd":
+    ensure => true,
+    enable => true,
+    require => Package["openssh-server"]
+  }
+
+  package { ["git-gui", "tcplay", "gnupg", "gedit-plugins", "vlc", "liveusb-creator", "wget", "easytag", "icedtea-web", "eog"]:
+    ensure => present
+  }
+
+  package { ["libXv.i686", "libXScrnSaver.i686", "qt.i686", "qt-x11.i686",  "pulseaudio-libs.i686", "pulseaudio-libs-glib2.i686", "alsa-plugins-pulseaudio.i686"]:
     ensure => present,
+    require => Package["wget"]
+  }
+
+  exec { "skype":
+    command => "yum -y install /home/bjorn/nas/bjorn/programvare/skype/skype-4.2.0.11-fedora.i586.rpm",
+    unless => "rpm -qa | grep skype",
+    require => Package["libXv.i686"]
   }
 
 
-# Dropbox
-
-  file { "/etc/yum.repos.d/dropbox.repo":
-    ensure => file,
-    source => "puppet:///modules/basic_stuff/dropbox.repo",
+  package { ["glibc.i686", "system-config-printer"]:
+    ensure => present,
+    require => Package["wget"]
   }
 
-  file { "/etc/sysctl.conf":
-    ensure => file,
-    source => "puppet:///modules/basic_stuff/sysctl.conf",
+  exec { "brother":
+    command => "yum -y install /home/bjorn/nas/bjorn/programvare/brother/cupswrapperHL2270DW-2.0.4-2.i386.rpm /home/bjorn/nas/bjorn/programvare/brother/hl2270dwlpr-2.1.0-1.i386.rpm",
+    unless => "rpm -qa | grep hl2270dwlpr",
+    require => Package["glibc.i686"]
   }
 
-  package { "nautilus-dropbox":
-    ensure => 'present',
-    require => File["/etc/yum.repos.d/dropbox.repo"]
-  }
-  exec { "sysctl-p":
-    command => "sysctl -p",
-    path => "/usr/sbin",
-    require => File["/etc/sysctl.conf"]
-  }
+
   
-
-    
-
 #  exec { 'dropbox_update':
 #    command => 'apt-get update',
 #    require => Exec['add spotify key']
