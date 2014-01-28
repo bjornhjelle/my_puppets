@@ -13,11 +13,20 @@ class xbmc {
   file { "advancedsettings.xml":
     path => "/home/bjorn/.xbmc/userdata/advancedsettings.xml",
     ensure => file,
-    owner => root,
-    group => root,
+    owner => bjorn,
+    group => bjorn,
     source => "puppet:///modules/xbmc/advancedsettings.xml",
     require => [Package["xbmc"], File["/home/bjorn/.xbmc/userdata"]]
-  }  
+  } 
+
+  file { "sources.xml":
+    path => "/home/bjorn/.xbmc/userdata/sources.xml",
+    ensure => file,
+    owner => bjorn,
+    group => bjorn,
+    source => "puppet:///modules/xbmc/sources.xml",
+    require => [Package["xbmc"], File["/home/bjorn/.xbmc/userdata"]]
+  } 
     
 
 }

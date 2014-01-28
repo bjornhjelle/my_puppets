@@ -1,0 +1,47 @@
+<sources>
+    <programs>
+        <default pathversion="1"></default>
+    </programs>
+    <video>
+        <default pathversion="1"></default>
+        <source>
+            <name>Videos</name>
+            <path pathversion="1">/home/bjorn/Videos/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>NAS Videos</name>
+            <path pathversion="1">/home/bjorn/nas_video/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </video>
+    <music>
+        <default pathversion="1"></default>
+        <source>
+            <name>Music</name>
+            <path pathversion="1">/home/bjorn/Music/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>Bjørn</name>
+            <path pathversion="1">/home/bjorn/nas_music/bjorn/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+        <source>
+            <name>Champar</name>
+            <path pathversion="1">/home/bjorn/nas_music/champar/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </music>
+    <pictures>
+        <default pathversion="1"></default>
+        <source>
+            <name>Pictures</name>
+            <path pathversion="1">/home/bjorn/Pictures/</path>
+            <allowsharing>true</allowsharing>
+        </source>
+    </pictures>
+    <files>
+        <default pathversion="1"></default>
+    </files>
+</sources>

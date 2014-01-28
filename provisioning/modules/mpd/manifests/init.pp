@@ -4,7 +4,7 @@ class mpd {
     ensure => 'present'
   }
   
-  file { ['/home/bjorn/.mpd', '/home/bjorn/.mpd/.playlists']:
+  file { ['/home/bjorn/.mpd', '/home/bjorn/.mpd/.playlists', '/home/bjorn/.config/autostart']:
     ensure => directory,    
     owner  => "bjorn",
     group  => "bjorn"
