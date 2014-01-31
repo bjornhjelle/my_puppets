@@ -57,7 +57,8 @@ node default {
   include mpd
   include spotify
   include xbmc
-  include apache
+  #include netflix
+  #include apache
   include nrk
 
   # en annen spotify rpm:
