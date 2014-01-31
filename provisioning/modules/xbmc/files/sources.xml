@@ -14,6 +14,11 @@
             <path pathversion="1">/home/bjorn/nas_video/</path>
             <allowsharing>true</allowsharing>
         </source>
+        <source>
+            <name>NAS USB Videos</name>
+            <path pathversion="1">/home/bjorn/nas_usb/</path>
+            <allowsharing>true</allowsharing>
+        </source>
     </video>
     <music>
         <default pathversion="1"></default>
@@ -24,7 +29,7 @@
         </source>
         <source>
             <name>Bjørn</name>
-            <path pathversion="1">/home/bjorn/nas_music/bjorn/</path>
+            <path pathversion="1">/home/bjorn/nas_music</path>
             <allowsharing>true</allowsharing>
         </source>
         <source>
@@ -36,11 +41,15 @@
     <pictures>
         <default pathversion="1"></default>
         <source>
-            <name>Pictures</name>
-            <path pathversion="1">/home/bjorn/Pictures/</path>
+            <name>Pictures, Bjørn</name>
+            <path pathversion="1">/home/bjorn/nas/bjorn/pictures/</path>
             <allowsharing>true</allowsharing>
         </source>
-    </pictures>
+        <source>
+            <name>Pictures, Champar</name>
+            <path pathversion="1">/home/bjorn/nas/champar/pictures/</path>
+            <allowsharing>true</allowsharing>
+        </source>    </pictures>
     <files>
         <default pathversion="1"></default>
     </files>
