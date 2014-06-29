@@ -1,0 +1,41 @@
+wordpress på fedora: 
+
+
+kjøre my_puppet
+
+SELinux
+
+sudo setsebool -P httpd_unified 1
+sudo setsebool -P httpd_can_network_relay 1
+
+pakke ut wordpress.3.8.1 i /var/www/html
+
+
+Setter AllowOverride All for /var/www/html i /etc/httpd/conf/httpd.conf
+
+restart apache: 
+
+sudo systemctl restart httpd
+
+gå til http://localhost/wordpress
+
+Endre i databasen: 
+
+
+mysql> select option_value from wp_options where option_name in ('siteurl','home');
++---------------------------------+
+| option_value                    |
++---------------------------------+
+| http://localhost:8080/wordpress |
+| http://localhost:8080/wordpress |
++---------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> update wp_options set option_value = 'http://localhost/wordpress' where option_name = 'home';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update wp_options set option_value = 'http://localhost/wordpress' where option_name = 'siteurl';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+

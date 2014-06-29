@@ -1,52 +1,25 @@
 
-
-
-
-
-#class virtualbox {
-#  file { "/etc/yum.repos.d/virtualbox.repo":
-#    ensure => file,
-#    source => "/home/bjorn/my_puppets/files/virtualbox.repo",
-#  }
-
-#  package { "VirtualBox":
-#    ensure => 'present',
-#    require => File["/etc/yum.repos.d/virtualbox.repo"]
-#  }
-#  user {
-#  "bjorn":
-#      groups      => ["vboxusers"],
-#      membership => minimum,
-#      require => Package["VirtualBox"]
-#  }  
-#  
-#  exec { "kmod-VirtualBox":
-#    command => "systemctl restart systemd-modules-load.service",
-#    require => Package["VirtualBox"],
-#    path => "/bin",
-#  }
+node 'hp' {
+  Exec {
+    path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  }
   
-#}
+  package { ["inkscape", "dkms", "kernel-devel", "gimp", "transmission", "dvdauthor", "ffmpeg", "brasero", "texlive", "latex2html",
+             "pandoc", "autoconf", "bison", "rdesktop", "sqlite", "sqlite-devel"]:
+    ensure => present
+  }
+    
+  include basic_stuff
+  include vagrant
+  include mysql
+  include pipelight
+}
 
-
-#define install_group ($group = $title) {
-#  exec { "group install ${group}":
-#    unless  => "/usr/bin/yum grouplist \"${group}\" | /bin/grep \"^Installed Groups\"",
-#    command => "/usr/bin/yum  groupinstall \"${group}\""
-#  }
-#}
-
-#exec { "update":
-#  command => "yum -y update",
-#  path => "/usr/bin",
-#}
-
-node default {
+node 'htpc.defaultdomain' {
 
   Exec {
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   }
-
 
 
   include basic_stuff
@@ -59,33 +32,18 @@ node default {
   include xbmc
   #include netflix
   #include apache
-  include nrk
+  include nrk  
 
+  include pipelight
   # en annen spotify rpm:
   #https://docs.google.com/file/d/0B_UAut69TSAicTFDU01QOVlXc2s/edit?usp=sharing
 
 
 
-#  exec {"vagrant":
-#    command => "yum -y install http://files.vagrantup.com/packages/db8e7a9c79b23264da129f55cf8569167fc22415/vagrant_1.3.3_x86_64.rpm",
-#    path => "/usr/bin",
-#    unless => "rpm -qa | grep vagrant",
-#    require => Package["VirtualBox"]
-#  }
+
 }
 
-#  Not very elegant, but it's a work around
-#exec { 'yum Group Install':
-#  unless  => '/usr/bin/yum grouplist "Development tools" | /bin/grep "^Installed Groups"',
-#  command => '/usr/bin/yum -y groupinstall "Development tools"',
-#}
 
-#install_group {'Games and Entertainment': 
-#  require => Exec["update"]
-#}
 
-#exec { "games_and_entertainment":
-#  command => '/usr/bin/yum -y groupinstall "Games and Entertainment"',
-#  require => Exec["update"]
-#}
+
 

@@ -24,7 +24,7 @@ class basic_stuff {
     require => Package["openssh-server"]
   }
 
-  package { ["git-gui", "tcplay", "gnupg", "gedit-plugins", "vlc", "liveusb-creator", "wget", "easytag", "icedtea-web", "eog", "smplayer"]:
+  package { ["git-gui", "tcplay", "ftp", "gnupg", "gedit-plugins", "vlc", "liveusb-creator", "wget", "easytag", "icedtea-web", "eog", "smplayer"]:
     ensure => present
   }
 
@@ -38,7 +38,17 @@ class basic_stuff {
     unless => "rpm -qa | grep skype",
     require => Package["libXv.i686"]
   }
-
+  
+  exec { "virtualbox":
+    command => "yum -y install /home/bjorn/nas/bjorn/programvare/virtualbox/VirtualBox-4.3-4.3.6_91406_fedora18-1.x86_64.rpm",
+    unless => "rpm -qa | grep VirtualBox",
+    require => Package["dkms"]
+  }
+#  exec { "virtualbox extension pack":
+#    command => "vboxmanage extpack install ~/nas/bjorn/programvare/virtualbox/Oracle_VM_VirtualBox_Extension_Pack-4.3.6-91406.vbox-extpack",
+#    unless => "vboxmanage list extpacks | grep 'Oracle VM VirtualBox Extension Packssdf'",
+#    require => Exec["virtualbox"]
+#  }  
 
   package { ["glibc.i686", "system-config-printer"]:
     ensure => present,
