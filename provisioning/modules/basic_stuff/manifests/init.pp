@@ -24,7 +24,7 @@ class basic_stuff {
     require => Package["openssh-server"]
   }
 
-  package { ["git-gui", "tcplay", "ftp", "gnupg", "gedit-plugins", "vlc", "liveusb-creator", "wget", "easytag", "icedtea-web", "eog", "smplayer"]:
+  package { ["git-gui", "tcplay", "ftp", "gnupg", "gedit-plugins", "vlc", "liveusb-creator", "wget", "easytag", "icedtea-web", "eog", "smplayer", "dkms"]:
     ensure => present
   }
 
