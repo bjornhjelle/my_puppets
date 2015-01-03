@@ -4,8 +4,12 @@ node 'hp' {
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   }
   
-  package { ["inkscape", "dkms", "kernel-devel", "gimp", "transmission", "dvdauthor", "ffmpeg", "brasero", "texlive", "latex2html",
-             "pandoc", "autoconf", "bison", "rdesktop", "sqlite", "sqlite-devel"]:
+  package { ["inkscape",  "kernel-devel", "gimp", "transmission", "dvdauthor", "ffmpeg", "brasero", "texlive", "latex2html",
+             "pandoc", "autoconf", "bison", "rdesktop", "sqlite", "sqlite-devel",
+              "poedit", # for wordpress språkfiler
+              "java-1.7.0-openjdk-devel",
+              "devilspie"
+             ]:
     ensure => present
   }
     
