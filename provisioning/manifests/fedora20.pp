@@ -20,7 +20,7 @@ node 'hp' {
   include vpn
 }
 
-node 'htpc.defaultdomain' {
+node 'htpc.localdomain' {
 
   Exec {
     path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
