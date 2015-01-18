@@ -8,3 +8,12 @@ fi
 # User specific aliases and functions
 alias h="history"
 alias puppet_f19="sudo puppet apply --modulepath my_puppets/modules my_puppets/manifests/fedora19.pp"
+alias kee="keepassx ~/nas/privat/keepass.kdb"
+alias keel="keepassx ~/Downloads/keepass.kdb"
+alias m="midori"
+alias uit="soffice https://knett-webdav.evita.no/ikb$content/100584/20141127_est
+imat_uit.xlsx"
+alias london="sudo openvpn /etc/openvpn/london.ovpn"
+alias island="sudo openvpn /etc/openvpn/island.ovpn"
+alias check="curl https://hide.me/en/check | grep \"location is hidden\""
+

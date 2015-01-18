@@ -17,6 +17,7 @@ node 'hp' {
   include vagrant
   include mysql
   include pipelight
+  include vpn
 }
 
 node 'htpc.defaultdomain' {
@@ -27,6 +28,7 @@ node 'htpc.defaultdomain' {
 
 
   include basic_stuff
+  include vpn
   include flash
   include dropbox
   include google-chrome
